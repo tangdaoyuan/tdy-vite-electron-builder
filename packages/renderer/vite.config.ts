@@ -1,17 +1,14 @@
 /* eslint-env node */
 
-import {chrome} from '../../.electron-vendors.cache.json';
-import {join} from 'path';
-import {builtinModules} from 'module';
+import { chrome } from '../../.electron-vendors.cache.json';
+import { join } from 'path';
+import { builtinModules } from 'module';
 import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vite';
 
 const PACKAGE_ROOT = __dirname;
 
-/**
- * @type {import('vite').UserConfig}
- * @see https://vitejs.dev/config/
- */
-const config = {
+const config = defineConfig({
   mode: process.env.MODE,
   root: PACKAGE_ROOT,
   resolve: {
@@ -33,9 +30,7 @@ const config = {
     assetsDir: '.',
     rollupOptions: {
       input: join(PACKAGE_ROOT, 'index.html'),
-      external: [
-        ...builtinModules.flatMap(p => [p, `node:${p}`]),
-      ],
+      external: [...builtinModules.flatMap(p => [p, `node:${p}`])],
     },
     emptyOutDir: true,
     brotliSize: false,
@@ -43,6 +38,6 @@ const config = {
   test: {
     environment: 'happy-dom',
   },
-};
+});
 
 export default config;
